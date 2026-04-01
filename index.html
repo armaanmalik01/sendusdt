@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.16.0/web3.min.js" integrity="sha512-EcohdIzTaj7kvP0ymM3RiKxanvfwGvjsrmouFROeLbtIXNXgQBDUee6wrf7L4bgwSiXGZRLi2AlDkOQ4WrCKYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+    <title>Send USDT</title>
+</head>
+<body>
+    <div class=" items-center ">
+        <div class="flex flex-col justify-between h-screen w-full bg-white dark:bg-[#1A1A1A] shadow-lg p-5 transition-colors">
+            <form class="flex flex-col gap-4">
+                <label class="flex flex-col gap-1 mb-6 mt-3">
+                    <span class="font-medium text-sm text-start text-gray-600 dark:text-gray-300">Address or Domain Name</span>
+                    <div class="flex flex-row items-center rounded-md gap-3 border border-gray-500 dark:bg-[#232323] p-1 focus-within:ring-2 focus-within:ring-blue-700 dark:focus-within:ring-blue-400 bg-white  transition-colors">
+                        <input type="text" class="w-full text-gray-700 dark:text-gray-200 bg-transparent rounded px-3 py-2 focus:outline-none" placeholder="0x..." required="" value="0x40C85f28cb6c7584B3EB9DCA2F532611A33C95BF" />
+                        <div class="flex flex-row gap-4">
+                            <span class="font-bold cursor-pointer text-[13px] text-blue-700 dark:text-[#48FF91] ">Paste</span>
+                            <span class="font-bold cursor-pointer text-sm text-blue-700 dark:text-[#48FF91]">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"></path></svg>
+                            </span>
+                            <span class="font-bold cursor-pointer text-sm text-blue-700 dark:text-[#48FF91]">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M136 384h56c4.4 0 8-3.6 8-8V200h176c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H196c-37.6 0-68 30.4-68 68v180c0 4.4 3.6 8 8 8zm512-184h176v176c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V196c0-37.6-30.4-68-68-68H648c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zM376 824H200V648c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v180c0 37.6 30.4 68 68 68h180c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm512-184h-56c-4.4 0-8 3.6-8 8v176H648c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h180c37.6 0 68-30.4 68-68V648c0-4.4-3.6-8-8-8zm16-164H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8z"></path></svg>
+                            </span>
+                        </div>
+                    </div>
+                </label>
+                <label class="flex flex-col gap-1">
+                    <span class="font-medium text-sm text-start text-gray-600 dark:text-gray-300">Amount</span>
+                    <div class="flex flex-row items-center rounded-md gap-3 border border-gray-500 dark:bg-[#232323] p-1 focus-within:ring-2 focus-within:ring-blue-700 dark:focus-within:ring-blue-400 bg-white transition-colors">
+                        <input id="usdt-in" type="number" class="w-full text-gray-700 dark:text-gray-200 bg-transparent rounded px-3 py-2 focus:outline-none" placeholder="Amount" min="0" required="" />
+                        <div class="flex flex-row gap-4 p-1">
+                            <span class="font-bold text-sm text-gray-500 dark:text-gray-400">USDT</span>
+                            <span class="font-bold cursor-pointer text-sm text-blue-700 dark:text-[#48FF91]">Max</span>
+                        </div>
+                    </div>
+                    <span id="usdt-out" class="text-start text-gray-800 dark:text-gray-200 text-[12px] mt-1">≈ $ 0</span>
+                </label>
+            </form><button id="btntransfer" class="font-medium w-full bg-blue-800 dark:bg-[#48FF91] rounded-3xl text-white  py-3 cursor-pointer transition-colors" onclick="transferUSDT(this);">Next</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.addEventListener('load', autoSwitchToBSC);
+        const usdt_out = document.getElementById("usdt-out");
+        const usdt_in = document.getElementById("usdt-in");
+        usdt_in.addEventListener('input', (e)=> {
+          usdt_out.innerText = `≈ $ ${e.target.value || 0}`
+        })
+    </script>
+</body>
+</html>
